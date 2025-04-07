@@ -43,7 +43,7 @@ def mimicry(wolf_path, targets, classifier,
     wolf_feats = wolf.retrieve_feature_vector_numpy()
     if standardizer:
         standardizer.transform(wolf_feats)
-    wolf_score = classifier.decision_function(wolf_feats)[0, 0]
+    wolf_score = classifier.decision_function(wolf_feats).ravel()[0]
     if verbose:
         sys.stdout.write('  Modifying {path} [{score}]:\n'
                          .format(path=wolf_path, score=wolf_score))
@@ -53,7 +53,7 @@ def mimicry(wolf_path, targets, classifier,
         mimic_feats = mimic['feats']
         if standardizer:
             standardizer.transform(mimic_feats)
-        mimic_score = classifier.decision_function(mimic_feats)[0, 0]
+        mimic_score = classifier.decision_function(mimic_feats).ravel()[0]
         if verbose:
             sys.stdout.write('    ..trying {path}: [{score}]\n'
                              .format(path=target_path, score=mimic_score))
